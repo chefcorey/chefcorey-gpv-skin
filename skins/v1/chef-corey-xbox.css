@@ -1,53 +1,30 @@
-/* Chef Corey v1 — GamePad Viewer Xbox selectors, verified 2026-08-18. */
-:root { --chefcorey-width:min(100vw,1536px); --chefcorey-height:calc(var(--chefcorey-width) * 2 / 3); --chefcorey-glow:rgba(255,61,61,.95); --chefcorey-gold:rgba(255,166,0,.72); --chefcorey-motion:120ms; }
-html,body,#gamepads,.container { background:transparent !important; }
-
-/* Controller bodies: #gamepad-0 (Controller 1) and #gamepad-1 (Controller 2). */
+/* Chef Corey v1. Reference canvas: 1536 × 1024 px; px notes map each percentage to native artwork. */
+:root {
+  --chefcorey-width:min(100vw,1536px); --chefcorey-height:calc(var(--chefcorey-width) * 2 / 3); --chefcorey-glow:rgba(255,61,61,.95); --chefcorey-gold:rgba(255,184,58,.9); --chefcorey-motion:120ms;
+  /* Set to 1 temporarily to show hitboxes + labels. Reset to 0 for OBS. */ --chefcorey-debug:0; --chefcorey-debug-opacity:calc(var(--chefcorey-debug) * .42);
+  /* LT/RT x=280/1080 y=15 size=177×123 */ --cc-trigger-x:18.23%; --cc-trigger-y:1.46%; --cc-trigger-w:11.52%; --cc-trigger-h:12.01%;
+  /* LB/RB x=238/976 y=82 size=323×82 */ --cc-bumper-x:15.49%; --cc-bumper-y:8.01%; --cc-bumper-w:21.03%; --cc-bumper-h:8.01%;
+  /* View/Menu x=614/839 y=317 size=83×61 */ --cc-view-x:39.97%; --cc-menu-x:54.62%; --cc-menu-y:30.96%; --cc-small-w:5.40%; --cc-small-h:5.96%;
+  /* Guide x=693 y=156 size=151×145 */ --cc-guide-x:45.12%; --cc-guide-y:15.23%; --cc-guide-w:9.83%; --cc-guide-h:14.16%;
+  /* A/B/X/Y: A 1117/388 B 1217/294 X 1020/294 Y 1117/193; each 108×108 */ --cc-face-w:7.03%; --cc-face-h:10.55%; --cc-a-x:72.72%; --cc-a-y:37.89%; --cc-b-x:79.23%; --cc-b-y:28.71%; --cc-x-x:66.41%; --cc-x-y:28.71%; --cc-y-x:72.72%; --cc-y-y:18.85%;
+  /* Sticks: left 372/266, right 895/496; each 184×184 */ --cc-stick-w:11.98%; --cc-stick-h:17.97%; --cc-left-stick-x:24.22%; --cc-left-stick-y:25.98%; --cc-right-stick-x:58.27%; --cc-right-stick-y:48.44%;
+  /* D-pad: up 561/474, down 561/613, left 479/543, right 619/543 */ --cc-dpad-up-x:36.52%; --cc-dpad-up-y:46.29%; --cc-dpad-v-w:5.47%; --cc-dpad-v-h:7.13%; --cc-dpad-down-x:36.52%; --cc-dpad-down-y:59.86%; --cc-dpad-left-x:31.18%; --cc-dpad-left-y:53.03%; --cc-dpad-h-w:7.16%; --cc-dpad-h-h:5.37%; --cc-dpad-right-x:40.30%; --cc-dpad-right-y:53.03%;
+}
+/* Transparent browser page for OBS. The PNG itself remains unmodified. */ html,body,#gamepads,.container { background:transparent !important; }
+/* Controller 1 #gamepad-0, Controller 2 #gamepad-1, and later slots. */
 .controller.xbox { --w:var(--chefcorey-width); position:absolute; width:var(--w) !important; height:var(--chefcorey-height) !important; margin:0 !important; aspect-ratio:3/2; background:center/100% 100% no-repeat url("assets/chefcoreycontrolleroverlay.png") !important; overflow:visible; }
-.controller.xbox.disconnected { background-image:url("assets/chefcoreycontrolleroverlay.png") !important; }
-.controller.xbox.disconnected div { display:block; }
-
-/* Shared stock-art reset; the underlying GamePad Viewer nodes remain functional. */
+.controller.xbox.disconnected { background-image:url("assets/chefcoreycontrolleroverlay.png") !important; }.controller.xbox.disconnected div { display:block; }
+/* Stock Xbox SVG reset; all functional GPV nodes remain. */
 .xbox .trigger,.xbox .trigger-button,.xbox .bumper,.xbox .button,.xbox .stick,.xbox .face,.xbox .back,.xbox .start,.xbox .meta { box-sizing:border-box; background-image:none !important; transition:filter var(--chefcorey-motion) ease,box-shadow var(--chefcorey-motion) ease,opacity var(--chefcorey-motion) ease; }
-
-/* LT / RT — analog opacity comes from GamePad Viewer; digital fallback follows .pressed. */
 .xbox .triggers,.xbox .bumpers,.xbox .arrows,.xbox .abxy,.xbox .sticks,.xbox .dpad { position:absolute; inset:0; width:100%; height:100%; left:0; top:0; }
-.xbox .trigger,.xbox .trigger-button { position:absolute; width:11.5%; height:12%; top:1.5%; border-radius:42% 42% 28% 28%; }
-.xbox .trigger { background:radial-gradient(ellipse,rgba(255,255,255,.52),rgba(255,48,48,.08) 58%,transparent 70%) !important; filter:drop-shadow(0 0 7px var(--chefcorey-glow)); }
-.xbox .trigger.left,.xbox .trigger-button.left { left:18.2%; }
-.xbox .trigger.right,.xbox .trigger-button.right { right:18.2%; }
-.xbox .trigger-button { opacity:0; }
-.xbox .trigger-button.pressed { opacity:1; box-shadow:0 0 18px 7px var(--chefcorey-glow); }
-
-/* LB / RB bumpers. */
-.xbox .bumper { position:absolute; top:8%; width:21%; height:8%; border-radius:48% 48% 24% 24%; opacity:0; }
-.xbox .bumper.left { left:15.5%; }.xbox .bumper.right { right:15.5%; }
-.xbox .bumper.pressed { opacity:1; box-shadow:inset 0 0 15px 5px rgba(255,255,255,.9),0 0 19px 7px var(--chefcorey-glow); }
-
-/* View / Menu. */
-.xbox .back,.xbox .start { position:absolute; width:5.4%; height:6%; top:31%; opacity:0; border-radius:50%; }
-.xbox .back { left:40%; }.xbox .start { right:40%; }
-.xbox .back.pressed,.xbox .start.pressed { opacity:1; box-shadow:0 0 14px 6px var(--chefcorey-gold),inset 0 0 10px 4px white; }
-
-/* Xbox / Guide center control, where GPV exposes it. */
-.xbox .meta { position:absolute; left:45.1%; top:15.2%; width:9.8%; height:14.2%; border-radius:50%; opacity:0; }
-.xbox .meta.pressed { opacity:1; box-shadow:0 0 22px 8px rgba(255,255,255,.92),0 0 34px 12px var(--chefcorey-glow); }
-
-/* A / B / X / Y. */
-.xbox .button { position:absolute; width:7.2%; height:10.8%; border-radius:50%; opacity:0; }
-.xbox .button.a { left:72.7%; top:39.7%; }.xbox .button.b { left:79.3%; top:30.3%; }.xbox .button.x { left:65.8%; top:30.3%; }.xbox .button.y { left:72.7%; top:20.5%; }
-.xbox .button.pressed { margin-top:0 !important; opacity:1; box-shadow:inset 0 0 16px 6px white,0 0 21px 8px var(--chefcorey-glow); filter:brightness(1.75); }
-
-/* Left / right sticks. GPV controls their movement; this does not override transform. */
-.xbox .stick { position:absolute; width:12%; height:18%; border:2px solid rgba(255,255,255,.16); border-radius:50%; background:radial-gradient(circle,rgba(255,255,255,.12),transparent 63%) !important; }
-.xbox .stick.left { left:24.2%; top:26%; }.xbox .stick.right { left:58.3%; top:48.4%; }
-.xbox .stick.pressed { box-shadow:inset 0 0 13px 5px white,0 0 22px 7px var(--chefcorey-glow); filter:brightness(1.5); }
-
-/* D-pad: each .face node highlights its own direction only. */
-.xbox .face { position:absolute; border-radius:9px; opacity:0; }
-.xbox .face.up { left:36.5%; top:46.3%; width:5.5%; height:7.2%; }.xbox .face.down { left:36.5%; top:59.8%; width:5.5%; height:7.2%; }
-.xbox .face.left { left:31.2%; top:53%; width:7.1%; height:5.4%; }.xbox .face.right { left:40.3%; top:53%; width:7.1%; height:5.4%; }
-.xbox .face.pressed { opacity:1; box-shadow:inset 0 0 13px 4px white,0 0 17px 6px var(--chefcorey-gold); }
-
-/* Unused Xbox template nodes. */
-.xbox .wheels,.xbox .fstick,.xbox .quadrant,.xbox .touchpad { display:none !important; }
+/* LT/RT: GPV analog opacity remains untouched; digital fallback uses .pressed. */
+.xbox .trigger,.xbox .trigger-button { position:absolute; width:var(--cc-trigger-w); height:var(--cc-trigger-h); top:var(--cc-trigger-y); border-radius:42% 42% 28% 28%; }.xbox .trigger { background:radial-gradient(ellipse,rgba(255,255,255,.52),rgba(255,48,48,.08) 58%,transparent 70%) !important; filter:drop-shadow(0 0 7px var(--chefcorey-glow)); }.xbox .trigger.left,.xbox .trigger-button.left { left:var(--cc-trigger-x); }.xbox .trigger.right,.xbox .trigger-button.right { right:var(--cc-trigger-x); }.xbox .trigger-button { opacity:var(--chefcorey-debug-opacity); }.xbox .trigger-button.pressed { opacity:1; box-shadow:0 0 18px 7px var(--chefcorey-glow); }
+/* LB/RB. */ .xbox .bumper { position:absolute; top:var(--cc-bumper-y); width:var(--cc-bumper-w); height:var(--cc-bumper-h); border-radius:48% 48% 24% 24%; opacity:var(--chefcorey-debug-opacity); }.xbox .bumper.left { left:var(--cc-bumper-x); }.xbox .bumper.right { right:var(--cc-bumper-x); }.xbox .bumper.pressed { opacity:1; box-shadow:inset 0 0 15px 5px rgba(255,255,255,.9),0 0 19px 7px var(--chefcorey-glow); }
+/* View/Menu. */ .xbox .back,.xbox .start { position:absolute; width:var(--cc-small-w); height:var(--cc-small-h); top:var(--cc-menu-y); opacity:var(--chefcorey-debug-opacity); border-radius:50%; }.xbox .back { left:var(--cc-view-x); }.xbox .start { left:var(--cc-menu-x); }.xbox .back.pressed,.xbox .start.pressed { opacity:1; box-shadow:0 0 14px 6px var(--chefcorey-gold),inset 0 0 10px 4px white; }
+/* Xbox / Guide. */ .xbox .meta { position:absolute; left:var(--cc-guide-x); top:var(--cc-guide-y); width:var(--cc-guide-w); height:var(--cc-guide-h); border-radius:50%; opacity:var(--chefcorey-debug-opacity); }.xbox .meta.pressed { opacity:1; box-shadow:0 0 22px 8px rgba(255,255,255,.92),0 0 34px 12px var(--chefcorey-glow); }
+/* A/B/X/Y. */ .xbox .button { position:absolute; width:var(--cc-face-w); height:var(--cc-face-h); border-radius:50%; opacity:var(--chefcorey-debug-opacity); }.xbox .button.a { left:var(--cc-a-x); top:var(--cc-a-y); }.xbox .button.b { left:var(--cc-b-x); top:var(--cc-b-y); }.xbox .button.x { left:var(--cc-x-x); top:var(--cc-x-y); }.xbox .button.y { left:var(--cc-y-x); top:var(--cc-y-y); }.xbox .button.pressed { margin-top:0 !important; opacity:1; box-shadow:inset 0 0 16px 6px white,0 0 21px 8px var(--chefcorey-glow); filter:brightness(1.75); }
+/* Sticks: GPV movement is preserved; white/gold ring + restrained red glow improve contrast. */ .xbox .stick { position:absolute; width:var(--cc-stick-w); height:var(--cc-stick-h); border:3px solid rgba(255,255,255,.96); outline:2px solid rgba(255,190,61,.88); outline-offset:-7px; border-radius:50%; background:radial-gradient(circle,rgba(255,255,255,.22),rgba(255,190,61,.08) 52%,transparent 66%) !important; box-shadow:inset 0 0 0 3px rgba(18,8,8,.72),0 0 9px 2px rgba(255,190,61,.78),0 0 17px 3px rgba(255,48,48,.42); }.xbox .stick.left { left:var(--cc-left-stick-x); top:var(--cc-left-stick-y); }.xbox .stick.right { left:var(--cc-right-stick-x); top:var(--cc-right-stick-y); }.xbox .stick.pressed { box-shadow:inset 0 0 13px 5px white,0 0 15px 4px var(--chefcorey-gold),0 0 25px 7px var(--chefcorey-glow); filter:brightness(1.5); }
+/* D-pad: individual directions. */ .xbox .face { position:absolute; border-radius:9px; opacity:var(--chefcorey-debug-opacity); }.xbox .face.up { left:var(--cc-dpad-up-x); top:var(--cc-dpad-up-y); width:var(--cc-dpad-v-w); height:var(--cc-dpad-v-h); }.xbox .face.down { left:var(--cc-dpad-down-x); top:var(--cc-dpad-down-y); width:var(--cc-dpad-v-w); height:var(--cc-dpad-v-h); }.xbox .face.left { left:var(--cc-dpad-left-x); top:var(--cc-dpad-left-y); width:var(--cc-dpad-h-w); height:var(--cc-dpad-h-h); }.xbox .face.right { left:var(--cc-dpad-right-x); top:var(--cc-dpad-right-y); width:var(--cc-dpad-h-w); height:var(--cc-dpad-h-h); }.xbox .face.pressed { opacity:1; box-shadow:inset 0 0 13px 4px white,0 0 17px 6px var(--chefcorey-gold); }
+/* Debug boxes/labels. Set --chefcorey-debug:1, align, then reset it to 0. */
+.xbox .button::after,.xbox .bumper::after,.xbox .back::after,.xbox .start::after,.xbox .meta::after,.xbox .stick::after,.xbox .face::after,.xbox .triggers::before,.xbox .triggers::after { position:absolute; z-index:20; display:grid; place-items:center; background:rgba(0,238,255,.32); outline:2px solid #ffe84a; color:#fff; font:700 clamp(10px,1.1vw,18px)/1 Arial,sans-serif; text-shadow:0 1px 2px #000; pointer-events:none; opacity:var(--chefcorey-debug); }.xbox .button::after,.xbox .bumper::after,.xbox .back::after,.xbox .start::after,.xbox .meta::after,.xbox .stick::after,.xbox .face::after { content:attr(data-name); inset:0; border-radius:inherit; }.xbox .button.a::after { content:"A"; }.xbox .button.b::after { content:"B"; }.xbox .button.x::after { content:"X"; }.xbox .button.y::after { content:"Y"; }.xbox .bumper.left::after { content:"LB"; }.xbox .bumper.right::after { content:"RB"; }.xbox .back::after { content:"VIEW"; }.xbox .start::after { content:"MENU"; }.xbox .meta::after { content:"GUIDE"; }.xbox .stick.left::after { content:"LS"; }.xbox .stick.right::after { content:"RS"; }.xbox .face.up::after { content:"D↑"; }.xbox .face.down::after { content:"D↓"; }.xbox .face.left::after { content:"D←"; }.xbox .face.right::after { content:"D→"; }.xbox .triggers::before,.xbox .triggers::after { top:var(--cc-trigger-y); width:var(--cc-trigger-w); height:var(--cc-trigger-h); border-radius:42% 42% 28% 28%; }.xbox .triggers::before { content:"LT"; left:var(--cc-trigger-x); }.xbox .triggers::after { content:"RT"; right:var(--cc-trigger-x); }
+/* Unused Xbox template nodes. */ .xbox .wheels,.xbox .fstick,.xbox .quadrant,.xbox .touchpad { display:none !important; }

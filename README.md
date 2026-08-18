@@ -38,3 +38,9 @@ skins/
 ## Resize and input coverage
 
 The original artwork’s 3:2 ratio is held by CSS variables. Use a 3:2 OBS Browser Source size such as 1536×1024, 960×640, or 768×512. Each version preserves GamePad Viewer input elements for A/B/X/Y, individual D-pad directions, both sticks, triggers, bumpers, Menu/View, and Guide where supported.
+
+## Transparency and alignment
+
+The GamePad Viewer page is forced transparent by the skin CSS for OBS. The v1 artwork file itself is an opaque 1536×1024 PNG, including its black outer canvas; it is intentionally preserved unchanged. To make the outer area transparent, use a separately edited transparent-PNG replacement in a future version (for example `skins/v2/assets/...`) rather than altering v1.
+
+For pixel-level alignment, `skins/v1/chef-corey-xbox.css` names every control’s X, Y, width, and height as percentage variables with 1536×1024 reference-pixel comments. Set `--chefcorey-debug: 1` near the top of that file to display bright labeled translucent hitboxes for every control. Reset it to `0` before using the skin in OBS.
