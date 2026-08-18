@@ -41,6 +41,6 @@ The original artwork’s 3:2 ratio is held by CSS variables. Use a 3:2 OBS Brows
 
 ## Transparency and alignment
 
-The GamePad Viewer page is forced transparent by the skin CSS for OBS. The v1 artwork file itself is an opaque 1536×1024 PNG, including its black outer canvas; it is intentionally preserved unchanged. To make the outer area transparent, use a separately edited transparent-PNG replacement in a future version (for example `skins/v2/assets/...`) rather than altering v1.
+The GamePad Viewer page is forced transparent by the skin CSS for OBS. The v1 artwork is a 1536×1024 PNG with a transparent outer canvas, so it can be used directly in a transparent OBS Browser Source.
 
 For pixel-level alignment, `skins/v1/chef-corey-xbox.css` names every control’s X, Y, width, and height as percentage variables with 1536×1024 reference-pixel comments. Set `--chefcorey-debug: 1` near the top of that file to display bright labeled translucent hitboxes for every control. Reset it to `0` before using the skin in OBS.
