@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <title>Chef Corey Controller Skins</title>
+    <link rel="stylesheet" href="site.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header>
+        <p class="eyebrow">GamePad Viewer skin library</p>
+        <h1>Chef Corey<br><span>Controller Skins</span></h1>
+        <p class="intro">Choose a design, choose your controller slot, then copy the ready-to-paste GamePad Viewer link.</p>
+      </header>
+      <section class="picker" aria-label="Skin picker">
+        <div class="control">
+          <label for="skin">Design</label>
+          <select id="skin" aria-describedby="skin-description"></select>
+          <p id="skin-description" class="muted"></p>
+        </div>
+        <div class="control">
+          <label for="player">Controller</label>
+          <select id="player">
+            <option value="1">Controller 1</option>
+            <option value="2">Controller 2</option>
+          </select>
+        </div>
+        <figure>
+          <img id="preview" alt="Selected controller skin preview">
+        </figure>
+        <div class="result">
+          <label for="viewer-url">GamePad Viewer URL</label>
+          <input id="viewer-url" type="text" readonly aria-label="GamePad Viewer URL">
+          <button id="copy" type="button">Copy URL</button>
+          <p id="copy-status" class="muted" aria-live="polite"></p>
+        </div>
+      </section>
+      <section class="next">
+        <h2>Adding v2, v3, and beyond</h2>
+        <p>Keep each new design in its own <code>skins/v#</code> folder, then add one entry to <code>skins/catalog.json</code>. The picker updates automatically; old OBS links continue working.</p>
+      </section>
+    </main>
+    <script src="picker.js"></script>
+  </body>
+</html>

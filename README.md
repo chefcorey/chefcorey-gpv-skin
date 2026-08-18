@@ -1,30 +1,40 @@
-# Chef Corey GamePad Viewer skin
+# Chef Corey GamePad Viewer skin library
 
-This skin uses the supplied controller art as-is. The copy at `assets/chefcoreycontrolleroverlay.png` is the only image used by the stylesheet; the original at `C:\Users\user\Documents\chefcoreycontrolleroverlay.png` was not modified.
+Open the live picker at [chefcorey.github.io/chefcorey-gpv-skin](https://chefcorey.github.io/chefcorey-gpv-skin/). Choose a design and Controller 1 or 2; it creates a ready-to-paste GamePad Viewer URL.
 
-## Publish and use
+## Repository layout
 
-1. Upload this folder to a GitHub repository and enable GitHub Pages, or serve it from any HTTPS host.
-2. Use the raw, publicly accessible URL to `chef-corey-xbox.css` as `editcss` in GamePad Viewer. For example:
+Each design is self-contained, so previously used OBS links never change:
 
-   `https://gamepadviewer.com/?skin=xbox&p=1&editcss=https://YOUR-USER.github.io/YOUR-REPO/chef-corey-xbox.css`
+```
+skins/
+  catalog.json              # The picker’s list of designs
+  v1/
+    chef-corey-xbox.css     # Version-specific skin logic
+    assets/                 # Version-specific artwork
+```
 
-3. For Controller 2, change the player value to `p=2`:
+`chef-corey-xbox.css` remains as a compatibility entry point for original v1 links. New links use the version-specific path.
 
-   `https://gamepadviewer.com/?skin=xbox&p=2&editcss=https://YOUR-USER.github.io/YOUR-REPO/chef-corey-xbox.css`
+## Add a new version
 
-The same CSS supports GPV's live controller slots `#gamepad-0` and `#gamepad-1`; no separate second-controller stylesheet is needed.
+1. Create `skins/v2/` (then `skins/v3/`, etc.) with its own CSS and `assets/` folder.
+2. Copy the v1 CSS as the starting point and point its image URL at the new artwork. Do not overwrite v1.
+3. Add the new design to `skins/catalog.json`, using this shape:
 
-## Resize safely
+   ```json
+   {
+     "id": "v2",
+     "name": "Chef Corey Neon",
+     "description": "A short description.",
+     "css": "skins/v2/chef-corey-xbox.css",
+     "preview": "skins/v2/assets/preview.png",
+     "status": "New"
+   }
+   ```
 
-The artwork's native 3:2 aspect ratio is held by `--chefcorey-width` and `--chefcorey-height`. Before publishing, you may change the first variable near the top of the CSS—for example, to `960px`. Percent-based control positions then scale with the artwork. In OBS, set the browser source dimensions in the same 3:2 ratio (for example 1536×1024, 960×640, or 768×512) and leave its background transparent.
+4. Commit and push. The picker automatically shows the new version.
 
-## Input coverage
+## Resize and input coverage
 
-- A/B/X/Y: bright press glow.
-- D-pad: individual directional highlights.
-- Left/right sticks: preserves GamePad Viewer's own stick movement and adds click glow.
-- LT/RT: preserves the viewer's analog-opacity output, with a digital-button fallback.
-- LB/RB, Menu, View, and Xbox/Guide (when exposed): press glow.
-
-The selectors were checked against GamePad Viewer's current live Xbox template on 2026-08-18. GPV adds `.pressed` to buttons, bumpers, sticks, D-pad faces, Menu/View, and Guide; triggers use their input-driven opacity.
+The original artwork’s 3:2 ratio is held by CSS variables. Use a 3:2 OBS Browser Source size such as 1536×1024, 960×640, or 768×512. Each version preserves GamePad Viewer input elements for A/B/X/Y, individual D-pad directions, both sticks, triggers, bumpers, Menu/View, and Guide where supported.
