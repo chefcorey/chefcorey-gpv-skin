@@ -3,8 +3,8 @@
     "id": "v1",
     "name": "Chef Corey Original",
     "description": "The original black, white, red, and gold Xbox design.",
-    "css": "skins/v1/chef-corey-xbox.css",
-    "preview": "skins/v1/assets/chefcoreycontrolleroverlay.png?v=2",
+    "css": "skins/v1/chef-corey-xbox.css?v=4",
+    "preview": "skins/v1/assets/chefcoreycontrolleroverlay.png?v=4",
     "status": "Current"
   }
 ]
