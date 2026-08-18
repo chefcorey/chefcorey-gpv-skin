@@ -3,7 +3,7 @@
   --chefcorey-width:min(100vw,1536px); --chefcorey-height:calc(var(--chefcorey-width) * 2 / 3); --chefcorey-glow:rgba(255,61,61,.95); --chefcorey-gold:rgba(255,184,58,.9); --chefcorey-motion:120ms;
   /* Set to 1 temporarily to show hitboxes + labels. Reset to 0 for OBS. */ --chefcorey-debug:0; --chefcorey-debug-opacity:calc(var(--chefcorey-debug) * .42);
   /* LT/RT x=280/1080 y=15 size=177×123 */ --cc-trigger-x:18.23%; --cc-trigger-y:1.46%; --cc-trigger-w:11.52%; --cc-trigger-h:12.01%;
-  /* LB/RB x=238/976 y=82 size=323×82 */ --cc-bumper-x:15.49%; --cc-bumper-y:8.01%; --cc-bumper-w:21.03%; --cc-bumper-h:8.01%;
+  /* LB/RB x=232/972 y=67 size=332×105; aligned to the white bumper surfaces. */ --cc-bumper-x:15.10%; --cc-bumper-y:6.54%; --cc-bumper-w:21.61%; --cc-bumper-h:10.25%;
   /* View/Menu x=614/839 y=317 size=83×61 */ --cc-view-x:39.97%; --cc-menu-x:54.62%; --cc-menu-y:30.96%; --cc-small-w:5.40%; --cc-small-h:5.96%;
   /* Guide x=693 y=156 size=151×145 */ --cc-guide-x:45.12%; --cc-guide-y:15.23%; --cc-guide-w:9.83%; --cc-guide-h:14.16%;
   /* A/B/X/Y: A 1113/390 B 1217/293 X 1020/293 Y 1117/191; each 108×108 */ --cc-face-w:7.03%; --cc-face-h:10.55%; --cc-a-x:72.46%; --cc-a-y:38.09%; --cc-b-x:79.23%; --cc-b-y:28.61%; --cc-x-x:66.41%; --cc-x-y:28.61%; --cc-y-x:72.72%; --cc-y-y:18.65%;
