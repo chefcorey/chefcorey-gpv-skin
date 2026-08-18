@@ -6,9 +6,9 @@
   /* LB/RB x=238/976 y=82 size=323×82 */ --cc-bumper-x:15.49%; --cc-bumper-y:8.01%; --cc-bumper-w:21.03%; --cc-bumper-h:8.01%;
   /* View/Menu x=614/839 y=317 size=83×61 */ --cc-view-x:39.97%; --cc-menu-x:54.62%; --cc-menu-y:30.96%; --cc-small-w:5.40%; --cc-small-h:5.96%;
   /* Guide x=693 y=156 size=151×145 */ --cc-guide-x:45.12%; --cc-guide-y:15.23%; --cc-guide-w:9.83%; --cc-guide-h:14.16%;
-  /* A/B/X/Y: A 1113/390 B 1216/294 X 1019/294 Y 1116/193; each 108×108 */ --cc-face-w:7.03%; --cc-face-h:10.55%; --cc-a-x:72.46%; --cc-a-y:38.09%; --cc-b-x:79.17%; --cc-b-y:28.71%; --cc-x-x:66.34%; --cc-x-y:28.71%; --cc-y-x:72.66%; --cc-y-y:18.85%;
+  /* A/B/X/Y: A 1113/390 B 1217/293 X 1020/293 Y 1117/191; each 108×108 */ --cc-face-w:7.03%; --cc-face-h:10.55%; --cc-a-x:72.46%; --cc-a-y:38.09%; --cc-b-x:79.23%; --cc-b-y:28.61%; --cc-x-x:66.41%; --cc-x-y:28.61%; --cc-y-x:72.72%; --cc-y-y:18.65%;
   /* Sticks: left 360/264, right 881/481; each 184×184. Centers match illuminated rings at 452/356 and 973/573. */ --cc-stick-w:11.98%; --cc-stick-h:17.97%; --cc-left-stick-x:23.40%; --cc-left-stick-y:25.78%; --cc-right-stick-x:57.36%; --cc-right-stick-y:46.97%;
-  /* D-pad: up 561/474, down 561/613, left 479/543, right 619/543 */ --cc-dpad-up-x:36.52%; --cc-dpad-up-y:46.29%; --cc-dpad-v-w:5.47%; --cc-dpad-v-h:7.13%; --cc-dpad-down-x:36.52%; --cc-dpad-down-y:59.86%; --cc-dpad-left-x:31.18%; --cc-dpad-left-y:53.03%; --cc-dpad-h-w:7.16%; --cc-dpad-h-h:5.37%; --cc-dpad-right-x:40.30%; --cc-dpad-right-y:53.03%;
+  /* D-pad: up 561/474, down 561/613, left 496/552, right 606/552 */ --cc-dpad-up-x:36.52%; --cc-dpad-up-y:46.29%; --cc-dpad-v-w:5.47%; --cc-dpad-v-h:7.13%; --cc-dpad-down-x:36.52%; --cc-dpad-down-y:59.86%; --cc-dpad-left-x:32.29%; --cc-dpad-left-y:53.91%; --cc-dpad-h-w:7.16%; --cc-dpad-h-h:5.37%; --cc-dpad-right-x:39.45%; --cc-dpad-right-y:53.91%;
 }
 /* Transparent browser page for OBS. The PNG itself remains unmodified. */ html,body,#gamepads,.container { background:transparent !important; }
 /* Controller 1 #gamepad-0, Controller 2 #gamepad-1, and later slots. */
