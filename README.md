@@ -1,6 +1,6 @@
 # Chef Corey GamePad Viewer skin library
 
-Open the live picker at [chefcorey.github.io/chefcorey-gpv-skin](https://chefcorey.github.io/chefcorey-gpv-skin/). Choose a design and Controller 1 or 2; it creates a ready-to-paste GamePad Viewer URL.
+Open the live picker at [chefcorey.github.io/chefcorey-gpv-skin](https://chefcorey.github.io/chefcorey-gpv-skin/). Choose a design; it creates a ready-to-paste OBS URL that automatically follows the controller receiving meaningful input.
 
 ## Repository layout
 
@@ -44,3 +44,7 @@ The original artwork’s 3:2 ratio is held by CSS variables. Use a 3:2 OBS Brows
 The GamePad Viewer page is forced transparent by the skin CSS for OBS. The v1 artwork is a 1536×1024 PNG with a transparent outer canvas, so it can be used directly in a transparent OBS Browser Source.
 
 For pixel-level alignment, `skins/v1/chef-corey-xbox.css` names every control’s X, Y, width, and height as percentage variables with 1536×1024 reference-pixel comments. Set `--chefcorey-debug: 1` near the top of that file to display bright labeled translucent hitboxes for every control. Reset it to `0` before using the skin in OBS.
+
+## Automatic controller selection
+
+The picker now creates an `overlay.html` OBS URL instead of a GamePad Viewer URL with a fixed `p=` player number. `overlay.js` scans `navigator.getGamepads()` on every animation frame, ignores null slots, and selects the connected controller that produces meaningful button, trigger, or stick input. It keeps the selected controller through short idle periods and changes only after it disconnects or another controller becomes active. Controller connection, disconnection, selection, and visibility events are logged in the browser console with the `[ChefCorey Overlay]` prefix.

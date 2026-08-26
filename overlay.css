@@ -1,0 +1,4 @@
+/* Keep the OBS document itself transparent; the v1 skin supplies all controller visuals. */
+html, body, #gamepads { width: 100%; height: 100%; margin: 0; overflow: hidden; background: transparent !important; }
+#gamepads { position: relative; }
+#controller-overlay { left: 50%; top: 50%; transform: translate(-50%, -50%); }

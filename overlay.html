@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chef Corey Controller Overlay</title>
+    <link rel="stylesheet" href="skins/v1/chef-corey-xbox.css?v=5">
+    <link rel="stylesheet" href="overlay.css?v=1">
+  </head>
+  <body>
+    <div id="gamepads" aria-label="Controller input overlay">
+      <div class="controller xbox active" id="controller-overlay">
+        <!-- LT / RT analog trigger indicators -->
+        <div class="triggers"><span class="trigger left"></span><span class="trigger right"></span><span class="trigger-button left"></span><span class="trigger-button right"></span></div>
+        <!-- LB / RB -->
+        <div class="bumpers"><span class="bumper left"></span><span class="bumper right"></span></div>
+        <!-- Xbox Guide, View, Menu -->
+        <div class="meta"></div><div class="arrows"><span class="back"></span><span class="start"></span></div>
+        <!-- A / B / X / Y -->
+        <div class="abxy"><span class="button a"></span><span class="button b"></span><span class="button x"></span><span class="button y"></span></div>
+        <!-- Left / right analog sticks -->
+        <div class="sticks"><span class="stick left"></span><span class="stick right"></span></div>
+        <!-- D-pad: up / down / left / right -->
+        <div class="dpad"><span class="face up"></span><span class="face down"></span><span class="face left"></span><span class="face right"></span></div>
+      </div>
+    </div>
+    <script src="overlay.js?v=2"></script>
+  </body>
+</html>
