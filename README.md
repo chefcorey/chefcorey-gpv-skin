@@ -54,7 +54,7 @@ The picker now creates an `overlay.html` OBS URL instead of a GamePad Viewer URL
 Since OBS 31, the OBS Browser Source receives no Gamepad API input while OBS is not the focused window, so the overlay stops moving in-game and resumes when you click back into OBS. A web page can't work around this, so the repo includes a small local bridge that reads Xbox/XInput controllers directly from Windows and streams them to the overlay.
 
 1. Install Python 3 for Windows (python.org, or `winget install Python.Python.3.12`). No extra packages needed.
-2. Clone or download this repo, then double-click `start-bridge.bat`. Leave its window open while streaming.
+2. Clone or download this repo, then double-click `Start Controller Bridge.py`. Leave its window open while streaming. (A .bat launcher was removed because Windows Smart App Control blocks downloaded .bat files.)
 3. Set the OBS Browser Source URL to `http://127.0.0.1:27645/overlay.html?skin=v1` (most reliable, served by the bridge). The GitHub Pages URL also connects to the bridge automatically.
 
 If the bridge isn't running, the overlay falls back to the normal Gamepad API (works only while OBS is focused). Add `?bridge=off` to the URL to disable the bridge. Controllers must be in XInput/PC mode (GameSir: PC/XInput mode).

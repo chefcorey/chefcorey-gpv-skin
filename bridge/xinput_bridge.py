@@ -10,7 +10,7 @@ overlay over Server-Sent Events.
 It also serves this repository's files, so the most reliable OBS URL is:
     http://127.0.0.1:27645/overlay.html?skin=v1
 
-Run:  py bridge\\xinput_bridge.py      (or double-click start-bridge.bat)
+Run:  py bridge\\xinput_bridge.py      (or double-click "Start Controller Bridge.py")
 """
 import ctypes
 import json
