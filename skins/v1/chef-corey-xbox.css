@@ -1,6 +1,6 @@
 /* Chef Corey v1. Reference canvas: 1536 × 1024 px; px notes map each percentage to native artwork. */
 :root {
-  --chefcorey-width:min(100vw,1536px); --chefcorey-height:calc(var(--chefcorey-width) * 2 / 3); --chefcorey-glow:rgba(255,61,61,.95); --chefcorey-gold:rgba(255,184,58,.9); --chefcorey-motion:120ms;
+  --chefcorey-width:min(100vw,1536px); --chefcorey-height:calc(var(--chefcorey-width) * 2 / 3); --chefcorey-glow:rgba(255,61,61,.95); --chefcorey-gold:rgba(255,184,58,.9); --chefcorey-motion:35ms;
   /* Set to 1 temporarily to show hitboxes + labels. Reset to 0 for OBS. */ --chefcorey-debug:0; --chefcorey-debug-opacity:calc(var(--chefcorey-debug) * .42);
   /* LT/RT x=280/1080 y=15 size=177×123 */ --cc-trigger-x:18.23%; --cc-trigger-y:1.46%; --cc-trigger-w:11.52%; --cc-trigger-h:12.01%;
   /* LB/RB x=232/972 y=67 size=332×105; aligned to the white bumper surfaces. */ --cc-bumper-x:15.10%; --cc-bumper-y:6.54%; --cc-bumper-w:21.61%; --cc-bumper-h:10.25%;

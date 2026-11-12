@@ -3,8 +3,16 @@
     "id": "v1",
     "name": "Chef Corey Original",
     "description": "The original black, white, red, and gold Xbox design.",
-    "css": "skins/v1/chef-corey-xbox.css?v=4",
+    "css": "skins/v1/chef-corey-xbox.css?v=6",
     "preview": "skins/v1/assets/chefcoreycontrolleroverlay.png?v=4",
-    "status": "Current"
+    "status": "Classic"
+  },
+  {
+    "id": "v2",
+    "name": "Chef Corey Triggers Up",
+    "description": "Original design with LT/RT shown above the controller, filling as you squeeze. Use a 1536×1300 browser source.",
+    "css": "skins/v2/chef-corey-xbox.css?v=2",
+    "preview": "skins/v2/assets/preview.png?v=1",
+    "status": "New"
   }
 ]

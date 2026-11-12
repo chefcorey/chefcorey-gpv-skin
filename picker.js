@@ -21,7 +21,7 @@ function updateSelection() {
 
 async function loadSkins() {
   /* Bump this query only when the catalog itself changes, so the picker never shows stale artwork. */
-  const response = await fetch("skins/catalog.json?v=4");
+  const response = await fetch("skins/catalog.json?v=5");
   skins = await response.json();
   for (const skin of skins) {
     const option = new Option(`${skin.name} (${skin.id.toUpperCase()})`, skin.id);

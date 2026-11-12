@@ -85,6 +85,7 @@ function select(gamepad, reason) {
 function clearVisuals() {
   for (const node of [nodes.triggerButtonLeft, nodes.triggerButtonRight, nodes.bumperLeft, nodes.bumperRight, nodes.view, nodes.menu, nodes.guide, nodes.a, nodes.b, nodes.x, nodes.y, nodes.leftStick, nodes.rightStick, nodes.up, nodes.down, nodes.left, nodes.right]) setPressed(node, false);
   nodes.triggerLeft.style.opacity = 0; nodes.triggerRight.style.opacity = 0;
+  nodes.triggerLeft.style.setProperty("--value", 0); nodes.triggerRight.style.setProperty("--value", 0);
   nodes.leftStick.style.transform = "translate(0, 0)"; nodes.rightStick.style.transform = "translate(0, 0)";
 }
 
@@ -134,6 +135,7 @@ function render(gamepad) {
   if (!gamepad) return;
   const lt = buttonValue(gamepad, 6), rt = buttonValue(gamepad, 7);
   nodes.triggerLeft.style.opacity = lt; nodes.triggerRight.style.opacity = rt;
+  nodes.triggerLeft.style.setProperty("--value", lt); nodes.triggerRight.style.setProperty("--value", rt);
   setPressed(nodes.triggerButtonLeft, pressed(gamepad, 6)); setPressed(nodes.triggerButtonRight, pressed(gamepad, 7));
   setPressed(nodes.a, pressed(gamepad, 0)); setPressed(nodes.b, pressed(gamepad, 1)); setPressed(nodes.x, pressed(gamepad, 2)); setPressed(nodes.y, pressed(gamepad, 3));
   setPressed(nodes.bumperLeft, pressed(gamepad, 4)); setPressed(nodes.bumperRight, pressed(gamepad, 5));

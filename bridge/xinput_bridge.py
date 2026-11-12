@@ -14,6 +14,7 @@ Run:  py bridge\\xinput_bridge.py      (or double-click "Start Controller Bridge
 """
 import ctypes
 import json
+import socket
 import os
 import sys
 import threading
@@ -23,8 +24,7 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
 HOST = "127.0.0.1"
 PORT = int(os.environ.get("CHEFCOREY_BRIDGE_PORT", "27645"))
-POLL_HZ = 250
-SEND_HZ = 120
+POLL_HZ = 500
 KEEPALIVE_S = 0.5
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -101,8 +101,9 @@ class Poller(threading.Thread):
     def __init__(self, get_state):
         super().__init__(daemon=True)
         self.get_state = get_state
-        self.lock = threading.Lock()
+        self.cond = threading.Condition()
         self.payload = json.dumps({"pads": []})
+        self.version = 0
         self.connected = [False] * 4
         self.next_scan = [0.0] * 4
 
@@ -122,13 +123,19 @@ class Poller(threading.Thread):
                     pads.append(to_pad(slot, state))
                 else:
                     self.next_scan[slot] = now + 1.0
-            with self.lock:
-                self.payload = json.dumps({"pads": pads}, separators=(",", ":"))
+            payload = json.dumps({"pads": pads}, separators=(",", ":"))
+            if payload != self.payload:
+                with self.cond:
+                    self.payload = payload
+                    self.version += 1
+                    self.cond.notify_all()
             time.sleep(1.0 / POLL_HZ)
 
-    def snapshot(self):
-        with self.lock:
-            return self.payload
+    def wait_for_change(self, seen, timeout):
+        """Block until the state changes (or timeout); returns (version, payload)."""
+        with self.cond:
+            self.cond.wait_for(lambda: self.version != seen, timeout=timeout)
+            return self.version, self.payload
 
 
 class Handler(SimpleHTTPRequestHandler):
@@ -154,16 +161,17 @@ class Handler(SimpleHTTPRequestHandler):
         self.send_header("Content-Type", "text/event-stream")
         self.send_header("Connection", "keep-alive")
         self.end_headers()
-        last, last_sent = None, 0.0
+        # Send small packets immediately; Nagle's algorithm can otherwise hold
+        # them back and make the overlay feel laggy.
+        self.connection.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+        seen = -1
         try:
             while True:
-                payload = self.poller.snapshot()
-                now = time.monotonic()
-                if payload != last or now - last_sent >= KEEPALIVE_S:
-                    self.wfile.write(f"data: {payload}\n\n".encode())
-                    self.wfile.flush()
-                    last, last_sent = payload, now
-                time.sleep(1.0 / SEND_HZ)
+                # Push each change the moment it happens; resend at least every
+                # KEEPALIVE_S so the overlay knows the bridge is alive.
+                seen, payload = self.poller.wait_for_change(seen, KEEPALIVE_S)
+                self.wfile.write(f"data: {payload}\n\n".encode())
+                self.wfile.flush()
         except (BrokenPipeError, ConnectionResetError, ConnectionAbortedError):
             pass
 
@@ -172,7 +180,19 @@ class Handler(SimpleHTTPRequestHandler):
             super().log_message(fmt, *args)
 
 
+def boost_windows_timing():
+    """Keep polling smooth while a fullscreen game has focus: 1 ms timer
+    resolution and above-normal priority so Windows doesn't starve the bridge."""
+    try:
+        ctypes.WinDLL("winmm").timeBeginPeriod(1)
+        kernel32 = ctypes.WinDLL("kernel32")
+        kernel32.SetPriorityClass(kernel32.GetCurrentProcess(), 0x00008000)  # ABOVE_NORMAL
+    except (AttributeError, OSError):
+        pass
+
+
 def main():
+    boost_windows_timing()
     get_state, dll_name, guide = load_xinput()
     poller = Poller(get_state)
     poller.start()

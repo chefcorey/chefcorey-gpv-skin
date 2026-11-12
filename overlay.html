@@ -4,7 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Chef Corey Controller Overlay</title>
-    <link rel="stylesheet" href="skins/v1/chef-corey-xbox.css?v=5">
+    <link rel="stylesheet" id="skin-css" href="skins/v1/chef-corey-xbox.css?v=6">
+    <script>
+      /* ?skin=v2 etc. selects a skin folder; anything unexpected falls back to v1. */
+      (function () {
+        var skin = new URLSearchParams(location.search).get("skin");
+        if (skin && /^v\d+$/.test(skin) && skin !== "v1") document.getElementById("skin-css").href = "skins/" + skin + "/chef-corey-xbox.css?v=2";
+      })();
+    </script>
     <link rel="stylesheet" href="overlay.css?v=1">
   </head>
   <body>
@@ -24,6 +31,6 @@
         <div class="dpad"><span class="face up"></span><span class="face down"></span><span class="face left"></span><span class="face right"></span></div>
       </div>
     </div>
-    <script src="overlay.js?v=3"></script>
+    <script src="overlay.js?v=4"></script>
   </body>
 </html>

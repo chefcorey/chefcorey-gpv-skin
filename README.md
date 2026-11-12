@@ -58,3 +58,9 @@ Since OBS 31, the OBS Browser Source receives no Gamepad API input while OBS is 
 3. Set the OBS Browser Source URL to `http://127.0.0.1:27645/overlay.html?skin=v1` (most reliable, served by the bridge). The GitHub Pages URL also connects to the bridge automatically.
 
 If the bridge isn't running, the overlay falls back to the normal Gamepad API (works only while OBS is focused). Add `?bridge=off` to the URL to disable the bridge. Controllers must be in XInput/PC mode (GameSir: PC/XInput mode).
+
+## v2: triggers above the controller
+
+`?skin=v2` uses the v1 artwork with standalone LT/RT pieces above the controller that fill from the bottom as you squeeze (analog) and glow when fully pressed. Its canvas is 1536×1300 (a 276 px trigger band plus the 1536×1024 artwork), so use a matching OBS Browser Source size such as **1536×1300** or **768×650**:
+
+`http://127.0.0.1:27645/overlay.html?skin=v2`
