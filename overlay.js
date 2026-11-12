@@ -39,7 +39,41 @@ function controllerPreference(gamepad) {
   return 0;
 }
 
-function connectedGamepads() { return [...navigator.getGamepads()].filter(Boolean); }
+/*
+ * Local XInput bridge (bridge/xinput_bridge.py). Since OBS 31 the Browser Source
+ * gets no Gamepad API input while OBS is unfocused, so in-game the overlay froze.
+ * When the bridge is streaming, its data is used; otherwise we fall back to the
+ * Gamepad API. Add ?bridge=off to disable, or ?bridge=<url> to override.
+ */
+const BRIDGE_FRESH_MS = 2000;
+const bridgeParam = new URLSearchParams(window.location.search).get("bridge");
+const servedByBridge = window.location.protocol === "http:" && window.location.hostname === "127.0.0.1";
+const BRIDGE_URL = bridgeParam && bridgeParam !== "off" ? bridgeParam : servedByBridge ? "/events" : "http://127.0.0.1:27645/events";
+let bridgePads = [];
+let bridgeLastAt = 0;
+let bridgeLive = false;
+
+function toBridgeGamepad(pad) {
+  return { index: pad.index, id: pad.id, axes: pad.axes, buttons: pad.buttons.map((value) => ({ value, pressed: value >= 0.5 })) };
+}
+
+function connectBridge() {
+  if (bridgeParam === "off" || typeof EventSource === "undefined") return;
+  const source = new EventSource(BRIDGE_URL);
+  source.onmessage = (event) => {
+    try {
+      bridgePads = JSON.parse(event.data).pads.map(toBridgeGamepad);
+      bridgeLastAt = performance.now();
+      if (!bridgeLive) { bridgeLive = true; log("bridge connected; using XInput bridge", BRIDGE_URL); }
+    } catch (error) { log("bridge message error", error); }
+  };
+  source.onerror = () => { if (bridgeLive) { bridgeLive = false; log("bridge lost; falling back to Gamepad API"); } };
+}
+
+function connectedGamepads() {
+  if (performance.now() - bridgeLastAt < BRIDGE_FRESH_MS) return bridgePads;
+  return [...navigator.getGamepads()].filter(Boolean);
+}
 function select(gamepad, reason) {
   if (selectedIndex === gamepad.index && selectedId === gamepad.id) return;
   selectedIndex = gamepad.index;
@@ -113,5 +147,6 @@ function tick(now) { render(chooseActiveController(connectedGamepads(), now)); r
 window.addEventListener("gamepadconnected", (event) => log("controller connected", { index: event.gamepad.index, id: event.gamepad.id }));
 window.addEventListener("gamepaddisconnected", (event) => { log("controller disconnected", { index: event.gamepad.index, id: event.gamepad.id }); if (event.gamepad.index === selectedIndex && event.gamepad.id === selectedId) clearSelection("disconnect event"); });
 document.addEventListener("visibilitychange", () => log(document.hidden ? "overlay hidden" : "overlay shown; rescanning controllers"));
+connectBridge();
 log("overlay ready; press any controller input to select the active device");
 requestAnimationFrame(tick);
