@@ -8,7 +8,8 @@ directly from Windows (no focus requirement) and streams their state to the
 overlay over Server-Sent Events.
 
 It also serves this repository's files, so the most reliable OBS URL is:
-    http://127.0.0.1:27645/overlay.html?skin=v1
+    http://127.0.0.1:27645/overlay.html?skin=v2   (triggers on top, 1536x1300)
+    http://127.0.0.1:27645/overlay.html?skin=v1   (original layout, 1536x1024)
 
 Run:  py bridge\\xinput_bridge.py      (or double-click "Start Controller Bridge.py")
 """
@@ -200,7 +201,9 @@ def main():
     server = ThreadingHTTPServer((HOST, PORT), partial(Handler, directory=REPO_ROOT))
     server.daemon_threads = True
     print(f"[bridge] using {dll_name} (guide button: {'yes' if guide else 'no'})")
-    print(f"[bridge] OBS Browser Source URL: http://{HOST}:{PORT}/overlay.html?skin=v1")
+    print("[bridge] OBS Browser Source URLs (pick one):")
+    print(f"[bridge]   triggers on top (v2, size 1536x1300): http://{HOST}:{PORT}/overlay.html?skin=v2")
+    print(f"[bridge]   original layout (v1, size 1536x1024): http://{HOST}:{PORT}/overlay.html?skin=v1")
     print("[bridge] leave this window open while streaming; Ctrl+C to stop")
     try:
         server.serve_forever()
